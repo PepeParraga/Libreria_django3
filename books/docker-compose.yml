@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    command: python /code/manage.py runserver 0.0.0.0:8000
+    environment:
+      - SECRET_KEY=a30773)a95+2=$$thmam$$*np=3=ak)k_fm@kd(bc$$)d8m%@!4dt  
+      - DEBUG=1
+      - STRIPE_TEST_PUBLISHABLE_KEY=pk_test_WvpawUWUs0FhJPu4IjCMW8JY00rVIb7pgS
+      - STRIPE_TEST_SECRET_KEY=sk_test_O0T8a48Ep4h5rWu9BqbCZOsV00tPqhE2Tl
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  db:
+    image: postgres:12
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+volumes:
+  postgres_data:
